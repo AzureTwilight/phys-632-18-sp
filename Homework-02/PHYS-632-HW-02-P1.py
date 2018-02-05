@@ -3,7 +3,7 @@
 import random
 import matplotlib.pyplot as plt
 
-simulationNumber = 2000 * 6
+simulationNumber = 2000
 peopleNumber = 5
 numberOfOccurrences = [0] * 200
 
