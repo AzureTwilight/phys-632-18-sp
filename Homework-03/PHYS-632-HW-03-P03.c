@@ -7,9 +7,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define EPS 1e-6
-#define ROW 4
-#define RN_SIZE ROW * 10
+#define RN_SIZE 30
 
 float targetFunc(float x){
   return pow(sin(x),2);
@@ -34,6 +32,19 @@ int main(){
   int i, j, k;
   int SUCC_FLG = 0;
   FILE* fp;
+  float eps;
+  int order = 3;
+  int rowMin;
+
+  if (order == 3){
+	rowMin = 3;
+	eps = 1e-5;
+  }else{
+	rowMin = 4;
+	eps = 1e-6;
+  }
+
+
 
   a = 0.0; b = 4 * M_PI;
 
@@ -47,7 +58,6 @@ int main(){
   Rn[0][0] =  0.5 * (targetFunc(a) + targetFunc(b));
   printf("%.4f\n", Rn[0][0]);
  
-  /* for (i=1;i<ROW;i++){ // loop for different step */
   i = 1;
   while (!SUCC_FLG){
 	h /= 2;
@@ -67,9 +77,11 @@ int main(){
 
 	err = fabsf(Rn[i][i] - Rn[i-1][i-1]);
 	printf("\t (err = %.4e)\n", err);
-	if (err < EPS && i > ROW + 1) SUCC_FLG = 1;
+	if (err < eps && i > rowMin + 1) SUCC_FLG = 1;
 	i++;
   }
+
+  if (Rn[i-1][i-1] == Rn[i-2][i-2]) printf("equal\n");
   
   return 1;
 }

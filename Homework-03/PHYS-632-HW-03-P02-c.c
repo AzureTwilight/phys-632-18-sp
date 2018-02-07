@@ -34,8 +34,9 @@ int main(){
 
   a = 0.0; b = 1.0;
 
-  /* fp = fopen("p2-ptc-data.txt", "w"); */
+  fp = fopen("p2-ptc-data.txt", "w");
   printf("Exact value is %.4f\n", Iexact);
+  fprintf(fp, "N\t& h\t& Inum\t& err\n");
 
   initRn(Rn);
 
@@ -60,6 +61,12 @@ int main(){
 	  printf("\t%.4f", Rn[i][j]);
 	}
 	printf("\n");
+
+  }
+  for (i=0; i < ROW; i++){
+	fprintf(fp, "%d\t& %.4f\t& %.4f\t& %.4f \\\\\n", i+1, (b-a) * pow(0.5, i), Rn[i][i], fabsf(Rn[i][i] - Iexact) / Iexact * 100);
   }
   
+  fclose(fp);
 }
+

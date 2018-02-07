@@ -27,6 +27,10 @@ int main(){
   int seed = time(NULL);
   srand(seed);
 
+  FILE* fp = fopen("p2-ptd-data.txt", "w");
+  fprintf(fp, "N\t& h\t& Inum\t& err \\\n");
+
+
   a = 0.0; b = 1.0;
   totArea = (b - a) * 1;
   
@@ -46,8 +50,9 @@ int main(){
 	}
 	err = fabsf((Inum - Iexact)/Iexact) * 100.;
 	printf("Inum for n = %d is %.4f with relative error = %4.2f%%\n", n, Inum, err);
+	fprintf(fp, "%d\t& %.4f\t& %.4f\\\\\n", n, Inum, err);
   }
 
-
-  return 1;
+  fclose(fp);
+  return 0;
 }
